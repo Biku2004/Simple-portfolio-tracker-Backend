@@ -2,30 +2,31 @@ package com.spring.demo.portfoliobackend.metrices;
 
 import com.spring.demo.portfoliobackend.entity.Stock;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class PortfolioMetrics {
-    private double totalValue;
-    private Stock topStock;
 
-    public PortfolioMetrics(double totalValue, Stock topStock) {
-        this.totalValue = totalValue;
-        this.topStock = topStock;
+    public static double calculateTotalPortfolioValue(List<Stock> stocks) {
+        return stocks.stream()
+                .mapToDouble(stock -> stock.getCurrentPrice() * stock.getQuantity())
+                .sum();
     }
 
-    public double getTotalValue() {
-        return totalValue;
+    public static Stock findTopPerformingStock(List<Stock> stocks) {
+        return stocks.stream()
+                .max(Comparator.comparingDouble(Stock::getCurrentPrice))
+                .orElse(null);
     }
 
-    public void setTotalValue(double totalValue) {
-        this.totalValue = totalValue;
+    public static Map<String, Double> calculatePortfolioDistribution(List<Stock> stocks) {
+        double totalValue = calculateTotalPortfolioValue(stocks);
+        return stocks.stream()
+                .collect(Collectors.toMap(
+                        Stock::getTicker,
+                        stock -> (stock.getCurrentPrice() * stock.getQuantity()) / totalValue * 100
+                ));
     }
-
-    public Stock getTopStock() {
-        return topStock;
-    }
-
-    public void setTopStock(Stock topStock) {
-        this.topStock = topStock;
-    }
-
-
 }
