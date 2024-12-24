@@ -96,7 +96,6 @@ public class StockController {
     @GetMapping("/{symbol}/statistics")
     public ResponseEntity<String> getStockStatistics(@PathVariable String symbol) {
         try {
-            // Fetching stock price as a proxy for statistics in Finnhub (you can replace with other relevant data)
             String response = stockService.getStockPrice(symbol);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

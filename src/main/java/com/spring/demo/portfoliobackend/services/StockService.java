@@ -177,8 +177,6 @@ public class StockService {
     }
 
     private void triggerScheduledTask() {
-        // This method will be called every 2 seconds
-        // You can add logic here to trigger specific tasks
     }
 
 

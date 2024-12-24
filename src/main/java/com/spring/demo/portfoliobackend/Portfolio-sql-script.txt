@@ -1,0 +1,13 @@
+create table if not exists portfolio_db.stock
+(
+    id                     bigint auto_increment
+        primary key,
+    ticker                 varchar(255) null,
+    name                   varchar(255) null,
+    quantity               int          not null,
+    buy_price              double       not null,
+    current_price          double       not null,
+    total_value            double       not null,
+    profit_loss            double       not null,
+    profit_loss_percentage double       not null
+);
