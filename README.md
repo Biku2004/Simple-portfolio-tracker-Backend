@@ -157,6 +157,7 @@ The backend is deployed on **AWS Elastic Beanstalk** with the following setup:
 The frontend is deployed on **Netlify** for seamless integration and ease of use:
 
 *   Deployment URL: [https://simple-portfolio-tracker-capx.netlify.app/](https://simple-portfolio-tracker-capx.netlify.app/)
+*   Frontend GitHub URL: https://github.com/Biku2004/Portfolio-angular
     
 
 ### Links
