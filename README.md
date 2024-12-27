@@ -47,7 +47,6 @@ The backend is a RESTful API built using **Spring Boot** and **MySQL**. It provi
 
 1.  ```
     git clone https://github.com/Biku2004/Portfolio-backend.git
-    cd Portfolio-backend
     ```
     
     
