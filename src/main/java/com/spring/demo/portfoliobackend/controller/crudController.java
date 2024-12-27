@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"https://simple-portfolio-tracker-capx.netlify.app","https://simple-portfolio-tracker.site","http://localhost:4200"})
 @RestController
 @RequestMapping("/api/stocks")
 public class crudController {
@@ -40,5 +41,10 @@ public class crudController {
     @DeleteMapping("/{id}")
     public void deleteStock(@PathVariable Long id) {
         crudService.deleteStock(id);
+    }
+
+    @GetMapping("/")
+    public void welcome() {
+        System.out.println("Welcome to the Portfolio Backend");
     }
 }

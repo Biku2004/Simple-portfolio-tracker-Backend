@@ -73,6 +73,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.spring.demo.portfoliobackend.services.StockService;
 
+@CrossOrigin(origins = {"https://simple-portfolio-tracker-capx.netlify.app","https://simple-portfolio-tracker.site","http://localhost:4200"})
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {
