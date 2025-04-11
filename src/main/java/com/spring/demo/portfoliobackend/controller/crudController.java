@@ -1,12 +1,17 @@
 package com.spring.demo.portfoliobackend.controller;
 
 import com.spring.demo.portfoliobackend.entity.Stock;
-import com.spring.demo.portfoliobackend.metrices.PortfolioMetrics;
 import com.spring.demo.portfoliobackend.services.crudService;
+import com.spring.demo.portfoliobackend.services.ExcelExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 @CrossOrigin(origins = {"https://simple-portfolio-tracker-capx.netlify.app","https://simple-portfolio-tracker.site","http://localhost:4200"})
@@ -15,6 +20,9 @@ import java.util.List;
 public class crudController {
     @Autowired
     private crudService crudService;
+
+    @Autowired
+    private ExcelExportService excelExportService;
 
     @GetMapping
     public List<Stock> getAllStocks() {
@@ -37,7 +45,6 @@ public class crudController {
         return crudService.updateStock(stock);
     }
 
-
     @DeleteMapping("/{id}")
     public void deleteStock(@PathVariable Long id) {
         crudService.deleteStock(id);
@@ -46,5 +53,25 @@ public class crudController {
     @GetMapping("/")
     public void welcome() {
         System.out.println("Welcome to the Portfolio Backend");
+    }
+
+    // New endpoint for Excel export
+    @GetMapping("/export/excel")
+    public ResponseEntity<Resource> exportStocksToExcel() {
+        try {
+            List<Stock> stocks = crudService.getAllStocks();
+            ByteArrayInputStream in = excelExportService.exportStocksToExcel(stocks);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "attachment; filename=Stock_Portfolio_" + System.currentTimeMillis() + ".xlsx");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new InputStreamResource(in));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
     }
 }
